@@ -5,7 +5,7 @@ import time
 import yfinance as yf
 #view the first five rows: 
 
-'Get the period value and validates the input'
+# Get the period value and validates the input
 
 def input_period():
     flag = False
@@ -17,7 +17,7 @@ def input_period():
             print("Invalid period")
     return period
 
-'Gets the stockhistory value and validates the input'
+# Gets the stockhistory value and validates the input
 
 def input_stockhistory():
     flag = False
@@ -30,7 +30,7 @@ def input_stockhistory():
             stock_history=input("Invalid input - Please enter yes or no: ")
     return stock_history  
 
-'Get the symbol value and validates the input'
+# Get the symbol value and validates the input
 
 def get_company_details(symbol):
     flag = False
@@ -38,6 +38,8 @@ def get_company_details(symbol):
     #get company information
         company_details = yf.Ticker(symbol)
         hist = company_details.history(period="1mo")
+        
+        # estiamte whether history data exists or not
         if(hist.empty):
             print("Invalid Symbol")
             symbol = input("Please enter the valid input symbol: ")
@@ -49,7 +51,7 @@ def get_company_details(symbol):
         print("\nCompany Website:",str(company_details.info["website"]))
     return symbol         
 
-'Get the Date and validates the input'
+# Get the Date and validates the input
 
 def input_date():
     date=["start", "end"]
@@ -59,6 +61,7 @@ def input_date():
         for x in range(len(date)):
             flag = False
             while(flag != True):
+                # input start and end date
                 date_input[x] = input("Please choose "+ date[x] +" date in (YYYY-MM-DD): ")
                 try:
                     flag = bool(datetime.datetime.strptime(date_input[x], '%Y-%m-%d'))
@@ -67,13 +70,14 @@ def input_date():
                     print("Invalid " + date[x] +" date")
         start = date_input[0]
         end = date_input[1]
+        # estiamte if the end time earlier than start time
         if(time.strptime(date_input[0], '%Y-%m-%d')>time.strptime(date_input[1], '%Y-%m-%d')):
             print("Start date cannot be greater than end date")
         else:
             flag_check = True
     return start, end       
 
-'Get the graph value to be plotted and validates the input'
+# Get the graph value to be plotted and validates the input
 
 def input_graphvalue():
     flag = False
